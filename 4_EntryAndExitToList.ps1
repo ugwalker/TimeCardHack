@@ -4,7 +4,7 @@
 "                                             "
 "   Entry And Exit LOG TO LIST                "
 "      - Time Card Hack!!                     "
-"   Version 1.0    UPDATE 2018/08/12          "
+"   Version 1.1    UPDATE 2018/08/20          "
 "                                             "
 "*********************************************"
 " "
@@ -13,10 +13,14 @@
 # System.Windows.Formsアセンブリを有効化
 [void][System.Reflection.Assembly]::Load("System.Windows.Forms, Version=2.0.0.0, Culture=Neutral, PublicKeyToken=b77a5c561934e089")
 
+# スクリプトのパスを取得する。
+$scriptFile = $MyInvocation.MyCommand.Path
+$sciriptPath = Split-Path -Parent $scriptFile
+
 # リスト化する入退室ログ（JSON）を指定させる。
 $dialog_EntryExit = New-Object System.Windows.Forms.OpenFileDialog 
 $dialog_EntryExit.Filter = "JSONファイル(*.JSON)|*.JSON;"
-$dialog_EntryExit.InitialDirectory = "C:\"
+$dialog_EntryExit.InitialDirectory = $sciriptPath
 $dialog_EntryExit.Title = "入退室ログを選択してください"
 
 if($dialog_EntryExit.ShowDialog() -ne "OK"){
@@ -27,7 +31,7 @@ if($dialog_EntryExit.ShowDialog() -ne "OK"){
 # 更新するリスト（Excel）を指定させる。
 $dialog_Excel = New-Object System.Windows.Forms.OpenFileDialog 
 $dialog_Excel.Filter = "Excelファイル(*.XLSX)|*.XLSX;"
-$dialog_Excel.InitialDirectory = "C:\"
+$dialog_Excel.InitialDirectory = $sciriptPath
 $dialog_Excel.Title = "更新するExcelを選択してください"
 
 if($dialog_Excel.ShowDialog() -ne "OK"){
